@@ -98,7 +98,7 @@ class RequestBuilderInitializer {
     );
   }
 
-  void initStrings({
+  static void initStrings({
     String? errorTitle,
     String? errorMessage,
     String? successTitle,
@@ -108,14 +108,14 @@ class RequestBuilderInitializer {
     String? emptyTitle,
     String? emptyMessage,
   }) {
-    _instance?.errorTitle = errorTitle;
-    _instance?.errorMessage = errorMessage;
-    _instance?.successTitle = successTitle;
-    _instance?.successMessage = successMessage;
-    _instance?.loadingTitle = loadingTitle;
-    _instance?.loadingMessage = loadingMessage;
-    _instance?.emptyTitle = emptyTitle;
-    _instance?.emptyMessage = emptyMessage;
+    instance.errorTitle = errorTitle;
+    instance.errorMessage = errorMessage;
+    instance.successTitle = successTitle;
+    instance.successMessage = successMessage;
+    instance.loadingTitle = loadingTitle;
+    instance.loadingMessage = loadingMessage;
+    instance.emptyTitle = emptyTitle;
+    instance.emptyMessage = emptyMessage;
   }
 }
 

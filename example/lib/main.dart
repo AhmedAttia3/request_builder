@@ -22,6 +22,10 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: const Locale('ar'),
+      onGenerateTitle: (context) {
+        RequestBuilderInitializer.initStrings(loadingTitle: "Looading...");
+        return "";
+      },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber),
         useMaterial3: true,
@@ -143,12 +147,21 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
                 Expanded(
-                    child: RequestBuilder<ExampleCubit>(
-                  contentBuilder: (context, cubit) => const Center(
-                    child: Text('Content of request'),
+                  child: RequestBuilder<ExampleCubit>(
+                    loadingTitle: "Lo..",
+                    successAction: () {
+                      ExampleCubit.get(context)
+                          .emitState(const EmptyState(message: "Error toast"));
+                    },
+                    successActionTitle: "Okey",
+                    contentBuilder: (context, cubit) {
+                      return const Center(
+                        child: Text('Content of request'),
+                      );
+                    },
+                    retry: (context, cubit) {},
                   ),
-                  retry: (context, cubit) {},
-                ))
+                )
               ],
             ),
           ),
