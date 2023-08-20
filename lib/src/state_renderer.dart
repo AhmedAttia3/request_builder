@@ -305,7 +305,7 @@ class StateRenderer extends StatelessWidget {
       _getTitle(state.title ?? title),
       _getMessage(state.message ?? message ?? ""),
       _getRetryButton(
-        actionTitle ?? (context.isEnLanguage ? "Ok" : "حسنا"),
+        actionTitle ?? context.lng.ok,
         context,
         () {
           if (action != null) {
@@ -342,7 +342,7 @@ class StateRenderer extends StatelessWidget {
       _getTitle(state.title ?? title),
       _getMessage(state.message ?? message ?? ""),
       _getRetryButton(
-        context.isEnLanguage ? "Retry" : "اعد المحاولة",
+        context.lng.retry,
         context,
         () => retryActionFunction.call(),
       )
@@ -362,7 +362,7 @@ class StateRenderer extends StatelessWidget {
       _getTitle(state.title ?? title),
       _getMessage(state.message ?? message ?? ""),
       _getRetryButton(
-        actionTitle ?? (context.isEnLanguage ? "Ok" : "حسنا"),
+        actionTitle ?? context.lng.ok,
         context,
         () {
           if (action != null) {
@@ -401,7 +401,7 @@ class StateRenderer extends StatelessWidget {
       _getTitle(state.title ?? title),
       _getMessage(state.message ?? message ?? ""),
       _getRetryButton(
-        actionTitle ?? (context.isEnLanguage ? "Ok" : "حسنا"),
+        actionTitle ?? context.lng.ok,
         context,
         () {
           if (action != null) {

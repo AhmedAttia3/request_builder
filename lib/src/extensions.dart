@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:request_builder/lang.dart';
 import 'package:request_builder/request_builder.dart';
 
 extension Sizer on num {
@@ -28,5 +29,7 @@ extension OnContext on BuildContext {
     return MediaQuery.of(this).size.width;
   }
 
-  bool get isEnLanguage => Localizations.localeOf(this).languageCode == 'en';
+  bool get isEn => Localizations.localeOf(this).languageCode == 'en';
+
+  Lang get lng => isEn ? LangEn() : LangAr();
 }

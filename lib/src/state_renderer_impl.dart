@@ -147,7 +147,7 @@ extension FlowStateExtension on FlowState {
           String? loadingTitle0 = loadingTitle ?? instance.loadingTitle;
           final loadingImage0 = loadingImage ?? instance.loadingImage;
           final loadingMessage0 = loadingMessage ?? instance.loadingMessage;
-          loadingTitle0 ??= context.isEnLanguage ? "Loading" : "جاري التحميل";
+          loadingTitle0 ??= context.lng.loading;
 
           if (type == LoadingRendererType.content) {
             Widget? content = loadingView;
@@ -175,7 +175,7 @@ extension FlowStateExtension on FlowState {
             String? errorTitle0 = errorTitle ?? instance.errorTitle;
             final errorImage0 = errorImage ?? instance.errorImage;
             final errorMessage0 = errorMessage ?? instance.errorMessage;
-            errorTitle0 ??= context.isEnLanguage ? "Error" : "خطأ";
+            errorTitle0 ??= context.lng.error;
 
             Widget? content = errorView;
             content ??= instance.errorView;
@@ -203,8 +203,7 @@ extension FlowStateExtension on FlowState {
           String? emptyTitle0 = emptyTitle ?? instance.emptyTitle;
           final emptyImage0 = emptyImage ?? instance.emptyImage;
           final emptyMessage0 = emptyMessage ?? instance.emptyMessage;
-          emptyTitle0 ??=
-              context.isEnLanguage ? "There is no data" : "لا توجد بيانات";
+          emptyTitle0 ??= context.lng.noData;
 
           Widget? content = emptyView;
           content ??= instance.emptyView;
@@ -227,7 +226,7 @@ extension FlowStateExtension on FlowState {
             String? successTitle0 = successTitle ?? instance.successTitle;
             final successImage0 = successImage ?? instance.successImage;
             final successMessage0 = successMessage ?? instance.successMessage;
-            successTitle0 ??= context.isEnLanguage ? "Success" : "تم بنجاح";
+            successTitle0 ??= context.lng.success;
 
             Widget? content = successView;
             content ??= instance.successView;
@@ -288,7 +287,7 @@ extension FlowStateExtension on FlowState {
             String? loadingTitle0 = loadingTitle ?? instance.loadingTitle;
             final loadingImage0 = loadingImage ?? instance.loadingImage;
             final loadingMessage0 = loadingMessage ?? instance.loadingMessage;
-            loadingTitle0 ??= context.isEnLanguage ? "Loading" : "جاري التحميل";
+            loadingTitle0 ??= context.lng.loading;
 
             Widget? content = popUpLoadingView;
             content ??= instance.popUpLoadingView;
@@ -310,7 +309,7 @@ extension FlowStateExtension on FlowState {
           String? errorTitle0 = errorTitle ?? instance.errorTitle;
           final errorImage0 = errorImage ?? instance.errorImage;
           final errorMessage0 = errorMessage ?? instance.errorMessage;
-          errorTitle0 ??= context.isEnLanguage ? "Error" : "خطأ";
+          errorTitle0 ??= context.lng.error;
 
           if (type == ErrorRendererType.popup) {
             Widget? content = popUpErrorView;
@@ -343,7 +342,7 @@ extension FlowStateExtension on FlowState {
           String? successTitle0 = successTitle ?? instance.successTitle;
           final successImage0 = successImage ?? instance.successImage;
           final successMessage0 = successMessage ?? instance.successMessage;
-          successTitle0 ??= context.isEnLanguage ? "Success" : "تم بنجاح";
+          successTitle0 ??= context.lng.success;
 
           // i should check if we are showing loading popup to remove it before showing success popup
           if (type == SuccessRendererType.popup) {

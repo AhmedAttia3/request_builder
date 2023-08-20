@@ -14,16 +14,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RequestBuilderInitializer.init(navigatorKey: navigatorKey);
+    RequestBuilderInitializer.init(
+      navigatorKey: navigatorKey,
+      successImage: "assets/json/loading.json",
+    );
 
     return MaterialApp(
       title: 'Flutter Demo',
       navigatorKey: navigatorKey,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: const Locale('ar'),
+      locale: const Locale('en'),
       onGenerateTitle: (context) {
-        RequestBuilderInitializer.initStrings(loadingTitle: "Looading...");
+        RequestBuilderInitializer.initStrings(
+          loadingTitle: "Looading...",
+        );
         return "";
       },
       theme: ThemeData(
@@ -100,9 +105,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     ElevatedButton(
                       child: const Text("Success content"),
                       onPressed: () {
-                        ExampleCubit.get(context).emitState(const SuccessState(
+                        ExampleCubit.get(context).emitState(
+                          const SuccessState(
                             type: SuccessRendererType.content,
-                            message: "Success content"));
+                            message: "message",
+                            title: "title",
+                          ),
+                        );
                       },
                     ),
                     ElevatedButton(
@@ -148,12 +157,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Expanded(
                   child: RequestBuilder<ExampleCubit>(
-                    loadingTitle: "Lo..",
                     successAction: () {
                       ExampleCubit.get(context)
                           .emitState(const EmptyState(message: "Error toast"));
                     },
+                    successTitle: "tyy",
+                    successMessage: "hhh",
                     successActionTitle: "Okey",
+                    // successMessage: "",
                     contentBuilder: (context, cubit) {
                       return const Center(
                         child: Text('Content of request'),
