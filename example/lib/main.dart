@@ -1,7 +1,7 @@
 import 'package:example/example_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:request_builder/request_builder.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:request_builder/request_builder.dart';
 
 void main() {
   runApp(const MyApp());

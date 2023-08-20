@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:request_builder/request_builder.dart';
 
 extension Sizer on num {
+  BuildContext get context =>
+      RequestBuilderInitializer.instance.navigatorKey!.currentContext!;
+
   double get h {
-    var h = RequestBuilder.appContext.height;
+    var h = context.height;
     return (this / 100) * h;
   }
 
   double get w {
-    var w = RequestBuilder.appContext.width;
+    var w = context.width;
     return (this / 100) * w;
   }
 
-  double get sp => this * (RequestBuilder.appContext.width / 3) / 100;
+  double get sp => this * (context.width / 3) / 100;
 }
 
 extension OnContext on BuildContext {
@@ -26,5 +28,5 @@ extension OnContext on BuildContext {
     return MediaQuery.of(this).size.width;
   }
 
-  AppLocalizations? get tr => AppLocalizations.of(this);
+  bool get isEnLanguage => Localizations.localeOf(this).languageCode == 'en';
 }
