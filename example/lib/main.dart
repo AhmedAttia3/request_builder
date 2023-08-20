@@ -1,7 +1,7 @@
 import 'package:example/example_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:request_builder/request_builder.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:request_builder/request_builder.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,14 +14,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RequestBuilderInitializer.init(navigatorKey: navigatorKey);
+    RequestBuilderInitializer.init(
+      navigatorKey: navigatorKey,
+      successImage: "assets/json/loading.json",
+    );
 
     return MaterialApp(
       title: 'Flutter Demo',
       navigatorKey: navigatorKey,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: const Locale('ar'),
+      locale: const Locale('en'),
+      onGenerateTitle: (context) {
+        RequestBuilderInitializer.initStrings(
+          loadingTitle: "Looading...",
+        );
+        return "";
+      },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber),
         useMaterial3: true,
@@ -96,9 +105,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     ElevatedButton(
                       child: const Text("Success content"),
                       onPressed: () {
-                        ExampleCubit.get(context).emitState(const SuccessState(
+                        ExampleCubit.get(context).emitState(
+                          const SuccessState(
                             type: SuccessRendererType.content,
-                            message: "Success content"));
+                            message: "message",
+                            title: "title",
+                          ),
+                        );
                       },
                     ),
                     ElevatedButton(
@@ -143,12 +156,23 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
                 Expanded(
-                    child: RequestBuilder<ExampleCubit>(
-                  contentBuilder: (context, cubit) => const Center(
-                    child: Text('Content of request'),
+                  child: RequestBuilder<ExampleCubit>(
+                    successAction: () {
+                      ExampleCubit.get(context)
+                          .emitState(const EmptyState(message: "Error toast"));
+                    },
+                    successTitle: "tyy",
+                    successMessage: "hhh",
+                    successActionTitle: "Okey",
+                    // successMessage: "",
+                    contentBuilder: (context, cubit) {
+                      return const Center(
+                        child: Text('Content of request'),
+                      );
+                    },
+                    retry: (context, cubit) {},
                   ),
-                  retry: (context, cubit) {},
-                ))
+                )
               ],
             ),
           ),

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:request_builder/request_builder.dart';
 import 'package:request_builder/src/assets.dart';
 import 'package:request_builder/src/extensions.dart';
-import 'package:request_builder/request_builder.dart';
-import 'package:request_builder/src/state_renderer_impl.dart';
 
 enum NormalRendererType { content }
 
@@ -41,6 +40,11 @@ class StateRenderer extends StatelessWidget {
   final double? maxContentHeight;
   final bool? isSliver;
   final bool? withScaffold;
+  final String? errorImage, successImage, loadingImage, emptyImage;
+  final String? errorTitle, successTitle, loadingTitle, emptyTitle;
+  final String? errorMessage, successMessage, loadingMessage, emptyMessage;
+  final String? successActionTitle;
+  final Function? successAction;
 
   const StateRenderer({
     Key? key,
@@ -49,6 +53,20 @@ class StateRenderer extends StatelessWidget {
     required this.retryActionFunction,
     this.isSliver = false,
     this.withScaffold = false,
+    this.loadingImage,
+    this.emptyImage,
+    this.errorImage,
+    this.successImage,
+    this.emptyTitle,
+    this.errorTitle,
+    this.loadingTitle,
+    this.successTitle,
+    this.emptyMessage,
+    this.errorMessage,
+    this.loadingMessage,
+    this.successMessage,
+    this.successActionTitle,
+    this.successAction,
   }) : super(key: key);
 
   @override
@@ -77,31 +95,79 @@ class StateRenderer extends StatelessWidget {
         switch (state.type) {
           case LoadingRendererType.popup:
             return _getPopUpLoadingDialog(
-                context, _defaultPopUpLoadingWidget(context));
+              context,
+              _defaultPopUpLoadingWidget(
+                context,
+                loadingTitle,
+                loadingImage,
+                loadingMessage,
+              ),
+            );
           case LoadingRendererType.content:
-            return _defaultLoadingWidget(context);
+            return _defaultLoadingWidget(
+              context,
+              loadingTitle,
+              loadingImage,
+              loadingMessage,
+            );
         }
         break;
       case ErrorState:
         switch (state.type) {
           case ErrorRendererType.popup:
-            return _getPopUpDialog(context, _defaultPopUpErrorWidget(context));
+            return _getPopUpDialog(
+              context,
+              _defaultPopUpErrorWidget(
+                context,
+                errorTitle,
+                errorImage,
+                errorMessage,
+                successActionTitle,
+                successAction,
+              ),
+            );
           case ErrorRendererType.content:
-            return _defaultErrorWidget(context);
+            return _defaultErrorWidget(
+              context,
+              errorTitle,
+              errorImage,
+              errorMessage,
+            );
         }
         break;
       case SuccessState:
         switch (state.type) {
           case SuccessRendererType.popup:
             return _getPopUpDialog(
-                context, _defaultPopUpSuccessWidget(context));
+              context,
+              _defaultPopUpSuccessWidget(
+                context,
+                successTitle,
+                successImage,
+                successMessage,
+                successActionTitle,
+                successAction,
+              ),
+            );
           case SuccessRendererType.content:
-            return _defaultSuccessWidget(context);
+            return _defaultSuccessWidget(
+              context,
+              successTitle,
+              successImage,
+              successMessage,
+              successActionTitle,
+              successAction,
+            );
         }
       case EmptyState:
         switch (state.type) {
           case EmptyRendererType.content:
-            return _defaultEmptyView(context);
+            return _defaultEmptyView(
+              context,
+              emptyTitle,
+              emptyImage,
+              emptyMessage,
+            );
         }
       default:
         return Container();
@@ -115,12 +181,17 @@ class StateRenderer extends StatelessWidget {
       elevation: 1.5,
       backgroundColor: Colors.transparent,
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(14),
-            boxShadow: const [BoxShadow(color: Colors.black26)]),
+          color: Colors.white,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(14),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black26,
+            ),
+          ],
+        ),
         child: widget,
       ),
     );
@@ -153,103 +224,193 @@ class StateRenderer extends StatelessWidget {
 
   Widget _getAnimatedImage(String animationName) {
     return SizedBox(
-        height: 15.h, width: 15.h, child: Lottie.asset(animationName));
+      height: 15.h,
+      width: 15.h,
+      child: Lottie.asset(animationName),
+    );
   }
 
-  static Widget defaultLoading() {
+  static Widget defaultLoading(String? image) {
     return SizedBox(
-        height: 15.h, width: 15.h, child: Lottie.asset(JsonAssets.loading));
+      height: 15.h,
+      width: 15.h,
+      child: Lottie.asset(image ?? JsonAssets.loading),
+    );
   }
 
   Widget _getMessage(String message) {
     return Center(
       child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            message,
-            textAlign: TextAlign.center,
-            style: RequestBuilderInitializer.instance.messageTextStyle,
-          )),
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          message,
+          textAlign: TextAlign.center,
+          style: RequestBuilderInitializer.instance.messageTextStyle,
+        ),
+      ),
     );
   }
 
-  Widget _getTitle(String message) {
+  Widget _getTitle(String? message) {
     return Center(
       child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            message,
-            textAlign: TextAlign.center,
-            style: RequestBuilderInitializer.instance.titleTextStyle,
-          )),
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          message ?? "",
+          textAlign: TextAlign.center,
+          style: RequestBuilderInitializer.instance.titleTextStyle,
+        ),
+      ),
     );
   }
 
   Widget _getRetryButton(
-      String buttonTitle, BuildContext context, Function() onPress) {
+    String buttonTitle,
+    BuildContext context,
+    Function() onPress,
+  ) {
     return Center(
-      child: ElevatedButton(onPressed: onPress, child: Text(buttonTitle)),
+      child: ElevatedButton(
+        onPressed: onPress,
+        child: Text(
+          buttonTitle,
+        ),
+      ),
     );
   }
 
-  Widget _defaultPopUpLoadingWidget(BuildContext context) {
+  Widget _defaultPopUpLoadingWidget(
+    BuildContext context,
+    String? title,
+    String? image,
+    String? message,
+  ) {
     return _getDialogContent([
-      _getAnimatedImage(JsonAssets.loading),
-      _getTitle(state.title),
-      _getMessage(state.message),
+      _getAnimatedImage(image ?? JsonAssets.loading),
+      _getTitle(state.title ?? title),
+      _getMessage(state.message ?? message ?? ""),
     ]);
   }
 
-  Widget _defaultPopUpErrorWidget(BuildContext context) {
+  Widget _defaultPopUpErrorWidget(
+    BuildContext context,
+    String? title,
+    String? image,
+    String? message,
+    String? actionTitle,
+    Function? action,
+  ) {
     return _getDialogContent([
-      _getAnimatedImage(JsonAssets.error),
-      _getTitle(state.title),
-      _getMessage(state.message),
-      _getRetryButton(context.tr!.ok, context, () => Navigator.pop(context))
-    ]);
-  }
-
-  Widget _defaultLoadingWidget(BuildContext context) {
-    return _getItemsColumn([
-      _getAnimatedImage(JsonAssets.loading),
-      _getTitle(state.title),
-      _getMessage(state.message),
-    ]);
-  }
-
-  Widget _defaultErrorWidget(BuildContext context) {
-    return _getItemsColumn([
-      _getAnimatedImage(JsonAssets.error),
-      _getTitle(state.title),
-      _getMessage(state.message),
+      _getAnimatedImage(image ?? JsonAssets.error),
+      _getTitle(state.title ?? title),
+      _getMessage(state.message ?? message ?? ""),
       _getRetryButton(
-          context.tr!.retry, context, () => retryActionFunction.call())
+        actionTitle ?? context.lng.ok,
+        context,
+        () {
+          if (action != null) {
+            action();
+          } else {
+            Navigator.pop(context);
+          }
+        },
+      )
     ]);
   }
 
-  Widget _defaultSuccessWidget(BuildContext context) {
+  Widget _defaultLoadingWidget(
+    BuildContext context,
+    String? title,
+    String? image,
+    String? message,
+  ) {
     return _getItemsColumn([
-      _getAnimatedImage(JsonAssets.success),
-      _getTitle(state.title),
-      _getMessage(state.message),
-      _getRetryButton(context.tr!.ok, context, () => retryActionFunction.call())
+      _getAnimatedImage(image ?? JsonAssets.loading),
+      _getTitle(state.title ?? title),
+      _getMessage(state.message ?? message ?? ""),
     ]);
   }
 
-  Widget _defaultEmptyView(BuildContext context) {
+  Widget _defaultErrorWidget(
+    BuildContext context,
+    String? title,
+    String? image,
+    String? message,
+  ) {
     return _getItemsColumn([
-      _getAnimatedImage(JsonAssets.empty),
-      _getTitle(state.title),
-      _getMessage(state.message),
+      _getAnimatedImage(image ?? JsonAssets.error),
+      _getTitle(state.title ?? title),
+      _getMessage(state.message ?? message ?? ""),
+      _getRetryButton(
+        context.lng.retry,
+        context,
+        () => retryActionFunction.call(),
+      )
     ]);
   }
 
-  Widget _defaultPopUpSuccessWidget(BuildContext context) {
+  Widget _defaultSuccessWidget(
+    BuildContext context,
+    String? title,
+    String? image,
+    String? message,
+    String? actionTitle,
+    Function? action,
+  ) {
+    return _getItemsColumn([
+      _getAnimatedImage(image ?? JsonAssets.success),
+      _getTitle(state.title ?? title),
+      _getMessage(state.message ?? message ?? ""),
+      _getRetryButton(
+        actionTitle ?? context.lng.ok,
+        context,
+        () {
+          if (action != null) {
+            action();
+          } else {
+            Navigator.pop(context);
+          }
+        },
+      )
+    ]);
+  }
+
+  Widget _defaultEmptyView(
+    BuildContext context,
+    String? title,
+    String? image,
+    String? message,
+  ) {
+    return _getItemsColumn([
+      _getAnimatedImage(image ?? JsonAssets.empty),
+      _getTitle(state.title ?? title),
+      _getMessage(state.message ?? message ?? ""),
+    ]);
+  }
+
+  Widget _defaultPopUpSuccessWidget(
+    BuildContext context,
+    String? title,
+    String? image,
+    String? message,
+    String? actionTitle,
+    Function? action,
+  ) {
     return _getDialogContent([
-      _getAnimatedImage(JsonAssets.success),
-      _getTitle(state.title),
-      _getMessage(state.message),
-      _getRetryButton(context.tr!.ok, context, () => Navigator.pop(context))
+      _getAnimatedImage(image ?? JsonAssets.success),
+      _getTitle(state.title ?? title),
+      _getMessage(state.message ?? message ?? ""),
+      _getRetryButton(
+        actionTitle ?? context.lng.ok,
+        context,
+        () {
+          if (action != null) {
+            action();
+          } else {
+            Navigator.pop(context);
+          }
+        },
+      )
     ]);
   }
 }
