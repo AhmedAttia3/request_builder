@@ -176,24 +176,19 @@ class StateRenderer extends StatelessWidget {
   }
 
   Widget _getPopUpDialog(BuildContext context, Widget widget) {
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.0)),
-      elevation: 1.5,
-      backgroundColor: Colors.transparent,
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(14),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black26,
-            ),
-          ],
-        ),
-        child: widget,
+    return Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black26,
+          ),
+        ],
       ),
+      child: widget,
     );
   }
 

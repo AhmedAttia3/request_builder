@@ -397,7 +397,7 @@ extension FlowStateExtension on FlowState {
         context: context,
         builder: (BuildContext context) => BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-          child: widget,
+          child: Dialog(backgroundColor: Colors.transparent, child: widget),
         ),
       );
       _isCurrentDialogShowing = false;

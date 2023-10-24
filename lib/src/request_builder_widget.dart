@@ -192,8 +192,8 @@ class RequestBuilder<B extends StateStreamable<FlowState>>
           state.flowStateListener(
             context,
             popUpErrorView: popUpErrorView,
-            popUpLoadingView: popUpErrorView,
-            popUpSuccessView: popUpErrorView,
+            popUpLoadingView: popUpLoadingView,
+            popUpSuccessView: popUpSuccessView,
             successTitle: successTitle,
             successImage: successImage,
             loadingTitle: loadingTitle,

@@ -1,6 +1,6 @@
 import 'package:example/example_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:request_builder/request_builder.dart';
 
 void main() {
@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       navigatorKey: navigatorKey,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
+      // localizationsDelegates: AppLocalizations.localizationsDelegates,
+      // supportedLocales: AppLocalizations.supportedLocales,
       locale: const Locale('en'),
       onGenerateTitle: (context) {
         RequestBuilderInitializer.initStrings(
