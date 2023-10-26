@@ -94,14 +94,11 @@ class StateRenderer extends StatelessWidget {
       case LoadingState:
         switch (state.type) {
           case LoadingRendererType.popup:
-            return _getPopUpLoadingDialog(
+            return _defaultPopUpLoadingWidget(
               context,
-              _defaultPopUpLoadingWidget(
-                context,
-                loadingTitle,
-                loadingImage,
-                loadingMessage,
-              ),
+              loadingTitle,
+              loadingImage,
+              loadingMessage,
             );
           case LoadingRendererType.content:
             return _defaultLoadingWidget(
@@ -189,14 +186,6 @@ class StateRenderer extends StatelessWidget {
         ],
       ),
       child: widget,
-    );
-  }
-
-  Widget _getPopUpLoadingDialog(BuildContext context, Widget view) {
-    return Dialog(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      child: view,
     );
   }
 
