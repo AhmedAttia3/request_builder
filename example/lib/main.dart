@@ -157,6 +157,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Expanded(
                   child: RequestBuilder<ExampleCubit>(
+                    onSuccess: (p0, p1) {
+                      ExampleCubit.get(context)
+                          .emitState(const EmptyState(message: "Error toast"));
+                    },
                     successAction: () {
                       ExampleCubit.get(context)
                           .emitState(const EmptyState(message: "Error toast"));

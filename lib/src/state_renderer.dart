@@ -12,7 +12,7 @@ enum ErrorRendererType { popup, toast, content }
 
 enum EmptyRendererType { content }
 
-enum SuccessRendererType { popup, toast, content }
+enum SuccessRendererType { popup, toast, content, none }
 
 class RenderViewParameters {
   final String message;
@@ -72,10 +72,11 @@ class StateRenderer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget widget = Container(
-        constraints: BoxConstraints(
-          maxHeight: maxContentHeight ?? 100.h,
-        ),
-        child: _getStateWidget(context));
+      constraints: BoxConstraints(
+        maxHeight: maxContentHeight ?? 100.h,
+      ),
+      child: _getStateWidget(context),
+    );
     if (isSliver!) {
       widget = SliverToBoxAdapter(
         child: widget,
