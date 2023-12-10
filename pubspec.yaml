@@ -5,24 +5,21 @@ homepage:
 
 environment:
   sdk: '>=3.0.6 <4.0.0'
-  flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_bloc:
-  lottie:
-  equatable:
-  flash: ^3.0.5+1
-  flutter_localizations:
-    sdk: flutter
+  lottie: ^2.7.0
+  equatable: ^2.0.5
+  flash: ^3.1.0
   intl: any
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
 
 
 flutter:
