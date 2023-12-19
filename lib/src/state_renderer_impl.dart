@@ -86,10 +86,13 @@ class EmptyState extends FlowState<EmptyRendererType> {
 }
 
 class SuccessState extends FlowState<SuccessRendererType> {
-  const SuccessState({required this.type, super.title, super.message});
+  const SuccessState(
+      {required this.type, super.title, super.message, this.data});
 
   @override
   final SuccessRendererType type;
+
+  final dynamic data;
 
   @override
   List<Object?> get props => [
@@ -397,7 +400,11 @@ extension FlowStateExtension on FlowState {
         context: context,
         builder: (BuildContext context) => BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-          child: Dialog(backgroundColor: Colors.transparent, child: widget, elevation: 0,),
+          child: Dialog(
+            backgroundColor: Colors.transparent,
+            child: widget,
+            elevation: 0,
+          ),
         ),
       );
       _isCurrentDialogShowing = false;
