@@ -32,11 +32,7 @@ class LoadingState extends FlowState<LoadingRendererType> {
   final LoadingRendererType type;
 
   @override
-  List<Object?> get props => [
-        type,
-        super.title,
-        super.message,
-      ];
+  List<Object?> get props => [];
 }
 
 class ErrorState extends FlowState<ErrorRendererType> {
