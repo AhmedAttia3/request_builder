@@ -327,12 +327,19 @@ extension FlowStateExtension on FlowState {
             // show popup error
             showPopup(context, content);
           } else if (type == ErrorRendererType.toast) {
-            FToast.showCustomToast(
-              context: context,
-              title: errorTitle0,
-              message: message ?? errorMessage0 ?? "",
-              color: instance.errorColor,
-            );
+            if (RequestBuilderInitializer.instance.onErrorToast != null) {
+              RequestBuilderInitializer.instance.onErrorToast!(
+                title: errorTitle0,
+                message: message ?? errorMessage0 ?? "",
+              );
+            } else {
+              FToast.showCustomToast(
+                context: context,
+                title: errorTitle0,
+                message: message ?? errorMessage0 ?? "",
+                color: instance.errorColor,
+              );
+            }
           }
         }
         break;
@@ -361,12 +368,19 @@ extension FlowStateExtension on FlowState {
             // show popup error
             showPopup(context, content);
           } else if (type == SuccessRendererType.toast) {
-            FToast.showCustomToast(
-              context: context,
-              title: successTitle0,
-              message: message ?? successMessage0 ?? "",
-              color: instance.mainColor,
-            );
+            if (RequestBuilderInitializer.instance.onErrorToast != null) {
+              RequestBuilderInitializer.instance.onErrorToast!(
+                title: successTitle0,
+                message: message ?? successMessage0 ?? "",
+              );
+            } else {
+              FToast.showCustomToast(
+                context: context,
+                title: successTitle0,
+                message: message ?? successMessage0 ?? "",
+                color: instance.mainColor,
+              );
+            }
           }
         }
         break;
@@ -388,18 +402,20 @@ extension FlowStateExtension on FlowState {
     Widget widget, {
     bool dismiss = true,
   }) async {
+    final color = RequestBuilderInitializer.instance.popUpBackground;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _isCurrentDialogShowing = true;
       await showDialog(
-        barrierColor: Colors.black.withOpacity(0.5),
+        barrierColor: color ?? Colors.black.withOpacity(0.5),
         barrierDismissible: dismiss,
         context: context,
         builder: (BuildContext context) => BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: Dialog(
+            insetPadding: EdgeInsets.zero,
             backgroundColor: Colors.transparent,
+            elevation: 0.0,
             child: widget,
-            elevation: 0,
           ),
         ),
       );
