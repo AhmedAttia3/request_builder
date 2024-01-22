@@ -368,8 +368,8 @@ extension FlowStateExtension on FlowState {
             // show popup error
             showPopup(context, content);
           } else if (type == SuccessRendererType.toast) {
-            if (RequestBuilderInitializer.instance.onErrorToast != null) {
-              RequestBuilderInitializer.instance.onErrorToast!(
+            if (RequestBuilderInitializer.instance.onSuccessToast != null) {
+              RequestBuilderInitializer.instance.onSuccessToast!(
                 title: successTitle0,
                 message: message ?? successMessage0 ?? "",
               );
