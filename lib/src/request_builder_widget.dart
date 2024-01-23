@@ -13,6 +13,8 @@ class RequestBuilderInitializer {
   Widget? errorView;
   Widget? emptyView;
   Widget? successView;
+  Function({required String title, required String message})? onSuccessToast;
+  Function({required String title, required String message})? onErrorToast;
   Widget? popUpLoadingView;
   Widget? popUpErrorView;
   Widget? popUpSuccessView;
@@ -28,6 +30,7 @@ class RequestBuilderInitializer {
   String? errorMessage, successMessage, loadingMessage, emptyMessage;
   Color mainColor;
   Color errorColor;
+  Color? popUpBackground;
 
   static RequestBuilderInitializer get instance {
     assert(_instance != null,
@@ -39,6 +42,8 @@ class RequestBuilderInitializer {
     this.navigatorKey,
     this.loadingView,
     this.errorView,
+    this.onSuccessToast,
+    this.onErrorToast,
     this.emptyView,
     this.successView,
     this.popUpLoadingView,
@@ -54,6 +59,7 @@ class RequestBuilderInitializer {
     this.successAction,
     required this.mainColor,
     required this.errorColor,
+    this.popUpBackground,
   });
 
   factory RequestBuilderInitializer.init({
@@ -73,8 +79,11 @@ class RequestBuilderInitializer {
     String? emptyImage,
     String? successActionTitle,
     Function? successAction,
+    Color? popUpBackground,
     Color mainColor = AppColors.mainColor,
     Color errorColor = AppColors.errorColor,
+    Function({required String title, required String message})? onSuccessToast,
+    Function({required String title, required String message})? onErrorToast,
   }) {
     return _instance ??= RequestBuilderInitializer._(
       navigatorKey: navigatorKey,
@@ -95,6 +104,9 @@ class RequestBuilderInitializer {
       successImage: successImage,
       successActionTitle: successActionTitle,
       successAction: successAction,
+      onErrorToast: onErrorToast,
+      onSuccessToast: onSuccessToast,
+      popUpBackground: popUpBackground,
     );
   }
 
