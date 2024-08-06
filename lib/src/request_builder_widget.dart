@@ -158,12 +158,14 @@ class RequestBuilder<B extends StateStreamable<FlowState>>
   final Function(BuildContext, B)? onContent;
   final Function? successAction;
   final bool preventDefaultListener;
+  final BuildContext? context;
 
   RequestBuilder({
     Key? key,
     required this.contentBuilder,
     this.retry,
     this.loadingView,
+    this.context,
     this.errorView,
     this.emptyView,
     this.successView,
@@ -202,7 +204,7 @@ class RequestBuilder<B extends StateStreamable<FlowState>>
       listener: (context, state) async {
         if (!preventDefaultListener) {
           state.flowStateListener(
-            context,
+            this.context ?? context,
             popUpErrorView: popUpErrorView,
             popUpLoadingView: popUpLoadingView,
             popUpSuccessView: popUpSuccessView,
