@@ -6,7 +6,7 @@ import 'package:request_builder/src/extensions.dart';
 
 enum NormalRendererType { content }
 
-enum LoadingRendererType { popup, content }
+enum LoadingRendererType { popup, content, none }
 
 enum ErrorRendererType { popup, toast, content }
 
